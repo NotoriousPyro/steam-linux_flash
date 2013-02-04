@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Steam-Linux Flash fixer v1.2.1
+# Steam-Linux Flash fixer v1.2.2
 # Programmed by NotoriousPyro
 # craigcrawford1988 AT gmail DOT com
 # PyroNexus.com
@@ -38,8 +38,7 @@ log() {
 	echo "$1" >> $E_LOG
 }
 
-log `${BOLD}`"Steam-Linux Flash fixer v1.2.1"`${NORM}` 1
-log "" 1
+`${BOLD}`"Steam-Linux Flash fixer v1.2.2"`${NORM}` 1
 
 # Remove the previous temporary directory, if any.
 rm -rf $D_TEMP
