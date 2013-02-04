@@ -2,7 +2,6 @@ Steam-Linux Flash fixer
 =================
 Wrote this purely out of boredom. It downloads the latest flash version and moves it to the appropriate directory so Steam can utilise it. It won't overwrite any files, so don't be scared.
 
-Simply copy the text and make a new file called flash_steam.sh
-Then type in console:
-chmod +x flash_steam.sh
-./flash_steam.sh
+Simply download the zip from github,
+Extract flash_steam.sh and execute it, either by double clicking it (if your OS allows that) or run it in terminal by typing ./flash_steam.sh
+You may need to give it execute permissions too, if you don't know how then please Google how to do it.
