@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Steam-Linux Flash fixer v1.2
+# Steam-Linux Flash fixer v1.2.1
 # Programmed by NotoriousPyro
 # craigcrawford1988 AT gmail DOT com
 # PyroNexus.com
@@ -13,7 +13,7 @@ D_STEA=~/.steam/bin
 D_PLUG=$D_STEA/plugins
 F_ARCH=flash.tar.gz
 F_LIBR=libflashplayer.so
-L_LINK=http://fpdownload.macromedia.com/pub/flashplayer/current/
+L_LINK=http://fpdownload.macromedia.com/pub/flashplayer/current
 L_FILE=install_flash_player_11_linux.i386.tar.gz
 
 E_LOG=$D_TEMP/error.log
@@ -22,6 +22,7 @@ E_TEMP="There was a problem writing to a temporary directory!"
 E_PLUG="There was a problem with your Steam plugins directory."
 E_DOWN="There was a problem downloading flash, the server may be down or the file may have been removed."
 E_EXTR="There was a problem extracting the archive."
+E_COPY="There was a problem copying the library."
 
 error() {
 	log `${BOLD}`"FATAL ERROR:"`${NORM}` 1
@@ -37,7 +38,7 @@ log() {
 	echo "$1" >> $E_LOG
 }
 
-log `${BOLD}`"Steam-Linux Flash fixer v1.2"`${NORM}` 1
+log `${BOLD}`"Steam-Linux Flash fixer v1.2.1"`${NORM}` 1
 log "" 1
 
 # Remove the previous temporary directory, if any.
@@ -72,8 +73,8 @@ log "`${BOLD}`Extracting:`${NORM}` $F_LIBR from $D_TEMP/$F_ARCH to $D_TEMP/$F_LI
 log "$(tar xzvf $D_TEMP/$F_ARCH -C $D_TEMP $F_LIBR)" || error "$E_EXTR"
 
 # Create the directory and copy the file.
-log "`${BOLD}`Copying:`${NORM}` $D_TEMP/$F_LIBR to $D_STEA/..." 1
-log "Copying: $(cp -fv $D_TEMP/$F_LIBR $D_PLUG)"
+log "`${BOLD}`Copying:`${NORM}` $D_TEMP/$F_LIBR to $D_PLUG/..." 1
+log "$(cp -fv $D_TEMP/$F_LIBR $D_PLUG)" || error "$E_COPY"
 
 # End
 log "" 1
