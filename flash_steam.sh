@@ -38,7 +38,7 @@ log() {
 	echo "$1" >> $E_LOG
 }
 
-`${BOLD}`"Steam-Linux Flash fixer v1.2.2"`${NORM}` 1
+echo `${BOLD}`"Steam-Linux Flash fixer v1.2.2"`${NORM}` 1
 
 # Remove the previous temporary directory, if any.
 rm -rf $D_TEMP
