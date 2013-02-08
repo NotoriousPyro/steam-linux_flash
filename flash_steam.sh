@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Steam-Linux Flash fixer v1.2.2
+# Steam-Linux Flash fixer v1.3.0
 # Programmed by NotoriousPyro
 # craigcrawford1988 AT gmail DOT com
 # PyroNexus.com
@@ -11,23 +11,26 @@ NORM="tput sgr0"
 D_TEMP=/tmp/flash_steam
 D_STEA=~/.steam/bin
 D_PLUG=$D_STEA/plugins
-F_ARCH=flash.tar.gz
+F_ARCH=install_flash_player_11_linux.i386.tar.gz
+#F_ARCH=flash.tar.gz
 F_LIBR=libflashplayer.so
 L_LINK=http://fpdownload.macromedia.com/pub/flashplayer/current
-L_FILE=install_flash_player_11_linux.i386.tar.gz
+#L_FILE=install_flash_player_11_linux.i386.tar.gz
 
 E_LOG=$D_TEMP/error.log
+E_FERR=`${BOLD}`"FATAL ERROR:"`${NORM}`
 E_STEA="There was a problem locating your Steam directory!"
 E_TEMP="There was a problem writing to a temporary directory!"
 E_PLUG="There was a problem with your Steam plugins directory."
 E_DOWN="There was a problem downloading flash, the server may be down or the file may have been removed."
 E_EXTR="There was a problem extracting the archive."
 E_COPY="There was a problem copying the library."
+E_LOGM="Please check `${BOLD}`$E_LOG`${NORM}` as it may provide hints as to what went wrong."
 
 error() {
-	log `${BOLD}`"FATAL ERROR:"`${NORM}` 1
+	log "$E_FERR" 1
 	log "$1" 1
-	log "Please check `${BOLD}`$E_LOG`${NORM}` as it may provide hints as to what went wrong." 1
+	log "$E_LOGM" 1
 	exit 1
 }
 
@@ -38,7 +41,7 @@ log() {
 	echo "$1" >> $E_LOG
 }
 
-echo `${BOLD}`"Steam-Linux Flash fixer v1.2.2"`${NORM}`
+echo `${BOLD}`"Steam-Linux Flash fixer v1.3.0"`${NORM}`
 
 # Remove the previous temporary directory, if any.
 rm -rf $D_TEMP
@@ -64,8 +67,8 @@ if [ -e $D_PLUG/$F_LIBR ]; then
 fi
 
 # Attempt to download flash player gzip archive.
-log "`${BOLD}`Downloading:`${NORM}` $L_FILE to $D_TEMP/$F_ARCH..." 1
-wget -nv -a $E_LOG -O $D_TEMP/$F_ARCH $L_LINK/$L_FILE || error "$E_DOWN"
+log "`${BOLD}`Downloading:`${NORM}` $L_LINK/$F_ARCH to $D_TEMP/$F_ARCH..." 1
+wget -nv -a $E_LOG -O $D_TEMP/$F_ARCH $L_LINK/$F_ARCH || error "$E_DOWN"
 
 # Extract the archive to /tmp/flash_steam/libflashplayer.so.
 log "`${BOLD}`Extracting:`${NORM}` $F_LIBR from $D_TEMP/$F_ARCH to $D_TEMP/$F_LIBR" 1
