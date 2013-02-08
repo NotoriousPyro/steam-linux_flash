@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Steam-Linux Flash fixer v1.3.1
+# Steam-Linux Flash fixer v1.3.2
 # Programmed by NotoriousPyro
 # craigcrawford1988 AT gmail DOT com
 # PyroNexus.com
@@ -41,7 +41,7 @@ log() {
 	echo "$1" >> $fileLog
 }
 
-echo `${BOLD}`"Steam-Linux Flash fixer v1.3.1"`${NORM}`
+echo `${BOLD}`"Steam-Linux Flash fixer v1.3.2"`${NORM}`
 
 # Remove the previous temporary directory, if any.
 rm -rf $dirTemporary
@@ -82,3 +82,4 @@ log "`(cp -fv $dirTemporary/$fileLibrary $dirSteamPlugins)`" || error "$errorCop
 echo
 echo "Successfully installed."
 echo "It is recommended you restart Steam for Flash to start working."
+sleep 5
