@@ -8,27 +8,29 @@
 # Defines
 BOLD="tput bold"
 NORM="tput sgr0"
-D_TEMP=/tmp/flash_steam
-D_STEA=~/.steam/bin
-D_PLUG=$D_STEA/plugins
-F_ARCH=install_flash_player_11_linux.i386.tar.gz
-F_LIBR=libflashplayer.so
-L_LINK=http://fpdownload.macromedia.com/pub/flashplayer/current
+dirTemporary=/tmp/flash_steam
+dirSteam=~/.steam/bin
+dirSteamPlugins=$dirSteam/plugins
 
-E_LOG=$D_TEMP/error.log
-E_FERR=`${BOLD}`"FATAL ERROR:"`${NORM}`
-E_STEA="There was a problem locating your Steam directory!"
-E_TEMP="There was a problem writing to a temporary directory!"
-E_PLUG="There was a problem with your Steam plugins directory."
-E_DOWN="There was a problem downloading flash, the server may be down or the file may have been removed."
-E_EXTR="There was a problem extracting the archive."
-E_COPY="There was a problem copying the library."
-E_LOGM="Please check `${BOLD}`$E_LOG`${NORM}` as it may provide hints as to what went wrong."
+fileLog=$dirTemporary/error.log
+fileArchive=install_flash_player_11_linux.i386.tar.gz
+fileLibrary=libflashplayer.so
+
+linkFlash=http://fpdownload.macromedia.com/pub/flashplayer/current
+
+errorFatal=`${BOLD}`"FATAL ERROR:"`${NORM}`
+error_dirSteam="There was a problem locating your Steam directory!"
+error_dirTemporary="There was a problem writing to a temporary directory!"
+error_dirSteamPlugins="There was a problem with your Steam plugins directory."
+errorDownload="There was a problem downloading flash, the server may be down or the file may have been removed."
+errorExtract="There was a problem extracting the archive."
+errorCopying="There was a problem copying the library."
+errorLogFileMessage="Please check `${BOLD}`$fileLog`${NORM}` as it may provide hints as to what went wrong."
 
 error() {
-	log "$E_FERR" 1
+	log "$errorFatal" 1
 	log "$1" 1
-	log "$E_LOGM" 1
+	log "$errorLogFileMessage" 1
 	exit 1
 }
 
@@ -36,47 +38,47 @@ log() {
 	if [ "$2" = "1" ]; then
 		echo "$1"
 	fi
-	echo "$1" >> $E_LOG
+	echo "$1" >> $fileLog
 }
 
 echo `${BOLD}`"Steam-Linux Flash fixer v1.3.0"`${NORM}`
 
 # Remove the previous temporary directory, if any.
-rm -rf $D_TEMP
+rm -rf $dirTemporary
 
 # Run some checks first...
-if [ ! -d $D_TEMP ]; then
-	mkdir $D_TEMP || {
-		error "$E_TEMP"
+if [ ! -d $dirTemporary ]; then
+	mkdir $dirTemporary || {
+		error "$error_dirTemporary"
 	}
 fi
-if [ ! -d $D_STEA ]; then
-	error "$E_STEA"
+if [ ! -d $dirSteam ]; then
+	error "$error_dirSteam"
 fi
-if [ ! -d $D_PLUG ]; then
-	log "$(mkdir -v $D_PLUG)" || {
-		error "$E_PLUG"
+if [ ! -d $dirSteamPlugins ]; then
+	log "$(mkdir -v $dirSteamPlugins)" || {
+		error "$error_dirSteamPlugins"
 	}
 fi
-if [ -e $D_PLUG/$F_LIBR ]; then
-	log "$(rm -v $D_PLUG/$F_LIBR)" || {
-		error "$E_PLUG"
+if [ -e $dirSteamPlugins/$fileLibrary ]; then
+	log "$(rm -v $dirSteamPlugins/$fileLibrary)" || {
+		error "$error_dirSteamPlugins"
 	}
 fi
 
 # Attempt to download flash player gzip archive.
-log "`${BOLD}`Downloading:`${NORM}` $L_LINK/$F_ARCH to $D_TEMP/$F_ARCH..." 1
-wget -nv -a $E_LOG -O $D_TEMP/$F_ARCH $L_LINK/$F_ARCH || error "$E_DOWN"
+log "`${BOLD}`Downloading:`${NORM}` $linkFlash/$fileArchive to $dirTemporary/$fileArchive..." 1
+wget -nv -a $fileLog -O $dirTemporary/$fileArchive $linkFlash/$fileArchive || error "$errorDownload"
 
 # Extract the archive to /tmp/flash_steam/libflashplayer.so.
-log "`${BOLD}`Extracting:`${NORM}` $F_LIBR from $D_TEMP/$F_ARCH to $D_TEMP/$F_LIBR" 1
-log "$(tar xzvf $D_TEMP/$F_ARCH -C $D_TEMP $F_LIBR)" || error "$E_EXTR"
+log "`${BOLD}`Extracting:`${NORM}` $fileLibrary from $dirTemporary/$fileArchive to $dirTemporary/$fileLibrary" 1
+log "$(tar xzvf $dirTemporary/$fileArchive -C $dirTemporary $fileLibrary)" || error "$errorExtract"
 
 # Create the directory and copy the file.
-log "`${BOLD}`Copying:`${NORM}` $D_TEMP/$F_LIBR to $D_PLUG/..." 1
-log "$(cp -fv $D_TEMP/$F_LIBR $D_PLUG)" || error "$E_COPY"
+log "`${BOLD}`Copying:`${NORM}` $dirTemporary/$fileLibrary to $dirSteamPlugins/..." 1
+log "$(cp -fv $dirTemporary/$fileLibrary $dirSteamPlugins)" || error "$errorCopying"
 
 # End
-log "" 1
-log "Successfully installed." 1
-log "It is recommended you restart Steam for Flash to start working." 1
+echo
+echo "Successfully installed."
+echo "It is recommended you restart Steam for Flash to start working."
