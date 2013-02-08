@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Steam-Linux Flash fixer v1.3.0
+# Steam-Linux Flash fixer v1.3.1
 # Programmed by NotoriousPyro
 # craigcrawford1988 AT gmail DOT com
 # PyroNexus.com
@@ -41,7 +41,7 @@ log() {
 	echo "$1" >> $fileLog
 }
 
-echo `${BOLD}`"Steam-Linux Flash fixer v1.3.0"`${NORM}`
+echo `${BOLD}`"Steam-Linux Flash fixer v1.3.1"`${NORM}`
 
 # Remove the previous temporary directory, if any.
 rm -rf $dirTemporary
@@ -56,12 +56,12 @@ if [ ! -d $dirSteam ]; then
 	error "$error_dirSteam"
 fi
 if [ ! -d $dirSteamPlugins ]; then
-	log "$(mkdir -v $dirSteamPlugins)" || {
+	log "`(mkdir -v $dirSteamPlugins)`" || {
 		error "$error_dirSteamPlugins"
 	}
 fi
 if [ -e $dirSteamPlugins/$fileLibrary ]; then
-	log "$(rm -v $dirSteamPlugins/$fileLibrary)" || {
+	log "`(rm -v $dirSteamPlugins/$fileLibrary)`" || {
 		error "$error_dirSteamPlugins"
 	}
 fi
@@ -72,11 +72,11 @@ wget -nv -a $fileLog -O $dirTemporary/$fileArchive $linkFlash/$fileArchive || er
 
 # Extract the archive to /tmp/flash_steam/libflashplayer.so.
 log "`${BOLD}`Extracting:`${NORM}` $fileLibrary from $dirTemporary/$fileArchive to $dirTemporary/$fileLibrary" 1
-log "$(tar xzvf $dirTemporary/$fileArchive -C $dirTemporary $fileLibrary)" || error "$errorExtract"
+log "`(tar xzvf $dirTemporary/$fileArchive -C $dirTemporary $fileLibrary)`" || error "$errorExtract"
 
 # Create the directory and copy the file.
 log "`${BOLD}`Copying:`${NORM}` $dirTemporary/$fileLibrary to $dirSteamPlugins/..." 1
-log "$(cp -fv $dirTemporary/$fileLibrary $dirSteamPlugins)" || error "$errorCopying"
+log "`(cp -fv $dirTemporary/$fileLibrary $dirSteamPlugins)`" || error "$errorCopying"
 
 # End
 echo
