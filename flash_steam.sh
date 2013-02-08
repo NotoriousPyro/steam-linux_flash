@@ -12,10 +12,8 @@ D_TEMP=/tmp/flash_steam
 D_STEA=~/.steam/bin
 D_PLUG=$D_STEA/plugins
 F_ARCH=install_flash_player_11_linux.i386.tar.gz
-#F_ARCH=flash.tar.gz
 F_LIBR=libflashplayer.so
 L_LINK=http://fpdownload.macromedia.com/pub/flashplayer/current
-#L_FILE=install_flash_player_11_linux.i386.tar.gz
 
 E_LOG=$D_TEMP/error.log
 E_FERR=`${BOLD}`"FATAL ERROR:"`${NORM}`
